@@ -1,0 +1,74 @@
+import java.util.Scanner;
+import java.util.List;
+
+public class Main {
+    public static void main(String[] args) {
+        ProductDAO banco = new ProductDAO();
+        Scanner teclado = new Scanner(System.in);
+        int opcao;
+
+        do {
+            System.out.println("\n=== MENU ===");
+            System.out.println("1 - Cadastrar produto");
+            System.out.println("2 - Mostrar todos os produtos");
+            System.out.println("3 - Procurar produto por ID");
+            System.out.println("4 - Editar produto");
+            System.out.println("5 - Apagar produto");
+            System.out.println("0 - Sair");
+            System.out.print("Escolha: ");
+            opcao = Integer.parseInt(teclado.nextLine());
+
+            switch (opcao) {
+                case 1:
+                    System.out.print("Nome do produto: ");
+                    String nome = teclado.nextLine();
+                    System.out.print("Preço do produto: ");
+                    double preco = Double.parseDouble(teclado.nextLine());
+                    banco.addProduct(new Product(nome, preco));
+                    break;
+
+                case 2:
+                    List<Product> lista = banco.getAllProducts();
+                    for (Product p : lista) {
+                        System.out.println(p);
+                    }
+                    break;
+
+                case 3:
+                    System.out.print("Digite o ID do produto: ");
+                    int idBusca = Integer.parseInt(teclado.nextLine());
+                    Product achado = banco.getProductById(idBusca);
+                    if (achado != null) {
+                        System.out.println(achado);
+                    } else {
+                        System.out.println("Produto não encontrado.");
+                    }
+                    break;
+
+                case 4:
+                    System.out.print("ID do produto que quer mudar: ");
+                    int idAtualiza = Integer.parseInt(teclado.nextLine());
+                    System.out.print("Novo nome: ");
+                    String novoNome = teclado.nextLine();
+                    System.out.print("Novo preço: ");
+                    double novoPreco = Double.parseDouble(teclado.nextLine());
+                    banco.updateProduct(new Product(idAtualiza, novoNome, novoPreco));
+                    break;
+
+                case 5:
+                    System.out.print("ID do produto que quer apagar: ");
+                    int idApagar = Integer.parseInt(teclado.nextLine());
+                    banco.deleteProduct(idApagar);
+                    break;
+
+                case 0:
+                    System.out.println("Saindo do programa...");
+                    break;
+
+                default:
+                    System.out.println("Opção inválida. Tente de novo.");
+            }
+
+        } while (opcao != 0);
+    }
+}
