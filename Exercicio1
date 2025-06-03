@@ -1,0 +1,25 @@
+import java.util.Scanner;
+
+public class Questao2 {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int x, y;
+
+        System.out.println("Eu sei dividir!");
+
+        while (true) {
+            try {
+                System.out.print("Primeiro valor: ");
+                x = Integer.parseInt(sc.nextLine());
+                System.out.print("Segundo valor: ");
+                y = Integer.parseInt(sc.nextLine());
+                System.out.println("Resultado: " + (double)x / y);
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("Digite apenas números inteiros.");
+            } catch (ArithmeticException e) {
+                System.out.println("Não é possível dividir por zero.");
+            }
+        }
+    }
+}
